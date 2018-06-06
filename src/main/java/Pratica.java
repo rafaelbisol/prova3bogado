@@ -25,8 +25,8 @@ public class Pratica {
         pratica.testeRemocaoInicio(false);
         pratica.testeRemocaoFim(false);
         pratica.testeRemocaoValor(false);
-        pratica.testeOrdenacaoComparavel(false);
-        pratica.testeOrdenacaoComparador(false);
+        pratica.testeOrdenacaoComparavel(true);
+        pratica.testeOrdenacaoComparador(true);
     }
     
     

@@ -109,14 +109,13 @@ public class ListaDuplamenteEncadeada<E> implements Iterable<E> {
      */
     public ListaDuplamenteEncadeada<E> insereComparador(E valor) {
         No<E> no = inicio;
-        Comparator<E> v = (Comparator<E>) no.valor;
-        while (no != null && v.compare((E) no, no.valor) > 0) {
+        while (no != null && this.getComparador().compare(valor, no.valor) > 0) {
             no = no.proximo;
         }
         if (no == null)
-            insereFim((E)valor);
+            insereFim(valor);
         else {
-            No<E> novo = new No<>((E)valor);
+            No<E> novo = new No<>(valor);
             novo.anterior = no.anterior;
             novo.proximo = no;
             if (no.anterior == null)
@@ -126,7 +125,7 @@ public class ListaDuplamenteEncadeada<E> implements Iterable<E> {
             no.anterior = novo;
         }
         return this;
-    }
+}
     
     /**
      * Ordena os elementos da lista em ordem ascendente.
@@ -142,16 +141,16 @@ public class ListaDuplamenteEncadeada<E> implements Iterable<E> {
             continua = false;
             no = inicio;
             while (no != ultimo) {
-                Comparator<E> v = (Comparator<E>) no.valor;
-                if (v.compare((E) no, no.proximo.valor) > 0) {
+                No<E> v = no;
+                if (this.getComparador().compare(v.valor, no.proximo.valor) > 0) {
                     troca(no, no.proximo);
                     continua = true;
                 }
                 no = no.proximo;
             }
             ultimo = ultimo.anterior;
-        } while (continua);        
-    }
+        } while (continua);     
+}
 
     /**
      * Retorna um iterador que permite percorrer a lista do inicio ao fim.
