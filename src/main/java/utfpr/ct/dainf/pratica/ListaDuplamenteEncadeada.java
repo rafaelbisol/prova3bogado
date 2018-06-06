@@ -108,7 +108,24 @@ public class ListaDuplamenteEncadeada<E> implements Iterable<E> {
      * @return A própria lista
      */
     public ListaDuplamenteEncadeada<E> insereComparador(E valor) {
-        throw new UnsupportedOperationException("Não implementado");
+        No<E> no = inicio;
+        Comparator<E> v = (Comparator<E>) no.valor;
+        while (no != null && v.compare((E) no, no.valor) > 0) {
+            no = no.proximo;
+        }
+        if (no == null)
+            insereFim((E)valor);
+        else {
+            No<E> novo = new No<>((E)valor);
+            novo.anterior = no.anterior;
+            novo.proximo = no;
+            if (no.anterior == null)
+                inicio = novo;
+            else
+                no.anterior.proximo = novo;
+            no.anterior = novo;
+        }
+        return this;
     }
     
     /**
@@ -117,7 +134,23 @@ public class ListaDuplamenteEncadeada<E> implements Iterable<E> {
      * Usa o comparador especificado para estabelecer a ordem.
      */
     protected void ordenaComparador() {
-        throw new UnsupportedOperationException("Não implementado");
+        No<E> no;
+        No<E> ultimo = fim;
+        
+        boolean continua;
+        do {
+            continua = false;
+            no = inicio;
+            while (no != ultimo) {
+                Comparator<E> v = (Comparator<E>) no.valor;
+                if (v.compare((E) no, no.proximo.valor) > 0) {
+                    troca(no, no.proximo);
+                    continua = true;
+                }
+                no = no.proximo;
+            }
+            ultimo = ultimo.anterior;
+        } while (continua);        
     }
 
     /**
